@@ -7,7 +7,7 @@ if (getCEVersion==nil) or (getCEVersion()<RequiredCEVersion) then
   closeCE()
 end
 getAutoAttachList().add("bg3.exe")
-getAutoAttachList().add("bg3_dx11.exe")
+--getAutoAttachList().add("bg3_dx11.exe")
 
 --Hotkey Script https://www.cheatengine.org/forum/viewtopic.php?t=602091&sid=50c9f9e1a64b033758025ebbfe7e8ca4
 
@@ -250,8 +250,15 @@ local tactMaxVal = "0"
 hotkeysSettings('DOS2DE\\CameraModHotkey')
 
 --Offset Varibles
-local app = "bg3_dx11.exe"
-local rax = "05530190"
+-----------------------
+--for vulkan
+local app = "bg3.exe"
+local rax = "057C6750"
+-----------------------
+--for dx11
+--local app = "bg3_dx11.exe"
+--local rax = "055353A0"
+-----------------------
 local baseAddress = "[" .. app .. "+" .. rax .. "]"
 local offsetMin = "7B8"
 --local offsetMinn = "C4C"
@@ -266,8 +273,8 @@ local pitchMinC = "CE4"
 local pitchMaxC = "CD8"
 local camAngle1 = "8EC"
 local camAngle2 = "8F0"
-local tactMin = "CB0"
-local tactMax = "CB4"
+local tactMin = "854"
+local tactMax = "858"
 local hud = "19"
 --7F0 camera height
 --8EC an angle
