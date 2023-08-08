@@ -7,6 +7,7 @@ if (getCEVersion==nil) or (getCEVersion()<RequiredCEVersion) then
   closeCE()
 end
 getAutoAttachList().add("bg3.exe")
+getAutoAttachList().add("bg3_dx11.exe")
 
 --Hotkey Script https://www.cheatengine.org/forum/viewtopic.php?t=602091&sid=50c9f9e1a64b033758025ebbfe7e8ca4
 
@@ -489,9 +490,9 @@ function ZoomHotDec(sender)
   writeFloat(baseAddress .. zoomSpeed, readFloat(baseAddress .. zoomSpeed) - getProperty(UDF1.ZoomInc,"Text"))
   setProperty(UDF1.ZoomSpeedEdit,"Text", readFloat(baseAddress .. zoomSpeed))
 end
-hk6=createHotkey(ZoomHotDec, VK_NUMPAD6)
-addChangeHotkeyKeysFunctionality(UDF1.zoom_dec_hotkey, hk6)
-generichotkey_onHotkey(hk6,ZoomHotDec)
+--hk6=createHotkey(ZoomHotDec, VK_NUMPAD6)
+--addChangeHotkeyKeysFunctionality(UDF1.zoom_dec_hotkey, hk6)
+--generichotkey_onHotkey(hk6,ZoomHotDec)
 
 
 
@@ -513,17 +514,17 @@ function PitchMinHotInc(sender)
   writeFloat(baseAddress .. pitchMin, getProperty(UDF1.PitchMinInc,"Text") + readFloat(baseAddress .. pitchMin))
   setProperty(UDF1.PitchMinEdit,"Text", readFloat(baseAddress .. pitchMin))
 end
-hk7=createHotkey(PitchMinHotInc, VK_NUMPAD7)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmin_inc_hotkey, hk7)
-generichotkey_onHotkey(hk7,PitchMinHotInc)
+--hk7=createHotkey(PitchMinHotInc, VK_NUMPAD7)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmin_inc_hotkey, hk7)
+--generichotkey_onHotkey(hk7,PitchMinHotInc)
 
 function PitchMinHotDec(sender)
   writeFloat(baseAddress .. pitchMin, readFloat(baseAddress .. pitchMin) - getProperty(UDF1.PitchMinInc,"Text"))
   setProperty(UDF1.PitchMinEdit,"Text", readFloat(baseAddress .. pitchMin))
 end
-hk8=createHotkey(PitchMinHotDec, VK_NUMPAD8)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmin_dec_hotkey, hk8)
-generichotkey_onHotkey(hk8,PitchMinHotDec)
+--hk8=createHotkey(PitchMinHotDec, VK_NUMPAD8)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmin_dec_hotkey, hk8)
+--generichotkey_onHotkey(hk8,PitchMinHotDec)
 
 
 
@@ -545,17 +546,17 @@ function PitchMaxHotInc(sender)
   writeFloat(baseAddress .. pitchMax, getProperty(UDF1.PitchMaxInc,"Text") + readFloat(baseAddress .. pitchMax))
   setProperty(UDF1.PitchMaxEdit,"Text", readFloat(baseAddress .. pitchMax))
 end
-hk9=createHotkey(PitchMaxHotInc, VK_NUMPAD9)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmax_inc_hotkey, hk9)
-generichotkey_onHotkey(hk9,PitchMaxHotInc)
+--hk9=createHotkey(PitchMaxHotInc, VK_NUMPAD9)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmax_inc_hotkey, hk9)
+--generichotkey_onHotkey(hk9,PitchMaxHotInc)
 
 function PitchMaxHotDec(sender)
   writeFloat(baseAddress .. pitchMax, readFloat(baseAddress .. pitchMax) - getProperty(UDF1.PitchMaxInc,"Text"))
   setProperty(UDF1.PitchMaxEdit,"Text", readFloat(baseAddress .. pitchMax))
 end
-hk10=createHotkey(FOVHotDec, VK_CONTROL, VK_NUMPAD1)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmax_dec_hotkey, hk10)
-generichotkey_onHotkey(hk10,PitchMaxHotDec)
+--hk10=createHotkey(FOVHotDec, VK_CONTROL, VK_NUMPAD1)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmax_dec_hotkey, hk10)
+--generichotkey_onHotkey(hk10,PitchMaxHotDec)
 
 
 
@@ -577,17 +578,17 @@ function PitchMinCHotInc(sender)
   writeFloat(baseAddress .. pitchMinC, getProperty(UDF1.PitchMinCInc,"Text") + readFloat(baseAddress .. pitchMinC))
   setProperty(UDF1.PitchMinCEdit,"Text", readFloat(baseAddress .. pitchMinC))
 end
-hk11=createHotkey(PitchMinCHotInc, VK_CONTROL, VK_NUMPAD2)
-addChangeHotkeyKeysFunctionality(UDF1.pitchminc_inc_hotkey, hk11)
-generichotkey_onHotkey(hk11,PitchMinCHotInc)
+--hk11=createHotkey(PitchMinCHotInc, VK_CONTROL, VK_NUMPAD2)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchminc_inc_hotkey, hk11)
+--generichotkey_onHotkey(hk11,PitchMinCHotInc)
 
 function PitchMinCHotDec(sender)
   writeFloat(baseAddress .. pitchMinC, readFloat(baseAddress .. pitchMinC) - getProperty(UDF1.PitchMinCInc,"Text"))
   setProperty(UDF1.PitchMinCEdit,"Text", readFloat(baseAddress .. pitchMinC))
 end
-hk12=createHotkey(PitchMinCHotDec, VK_CONTROL, VK_NUMPAD3)
-addChangeHotkeyKeysFunctionality(UDF1.pitchminc_dec_hotkey, hk12)
-generichotkey_onHotkey(hk12,PitchMinCHotDec)
+--hk12=createHotkey(PitchMinCHotDec, VK_CONTROL, VK_NUMPAD3)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchminc_dec_hotkey, hk12)
+--generichotkey_onHotkey(hk12,PitchMinCHotDec)
 
 
 
@@ -610,17 +611,17 @@ function PitchMaxCHotInc(sender)
   writeFloat(baseAddress .. pitchMaxC, getProperty(UDF1.PitchMaxCInc,"Text") + readFloat(baseAddress .. pitchMaxC))
   setProperty(UDF1.PitchMaxCEdit,"Text", readFloat(baseAddress .. pitchMaxC))
 end
-hk13=createHotkey(PitchMaxCHotInc, VK_CONTROL, VK_NUMPAD4)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmaxc_inc_hotkey, hk13)
-generichotkey_onHotkey(hk13,PitchMaxCHotInc)
+--hk13=createHotkey(PitchMaxCHotInc, VK_CONTROL, VK_NUMPAD4)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmaxc_inc_hotkey, hk13)
+--generichotkey_onHotkey(hk13,PitchMaxCHotInc)
 
 function PitchMaxCHotDec(sender)
   writeFloat(baseAddress .. pitchMaxC, readFloat(baseAddress .. pitchMaxC) - getProperty(UDF1.PitchMaxCInc,"Text"))
   setProperty(UDF1.PitchMaxCEdit,"Text", readFloat(baseAddress .. pitchMaxC))
 end
-hk14=createHotkey(PitchMaxCHotDec, VK_CONTROL, VK_NUMPAD5)
-addChangeHotkeyKeysFunctionality(UDF1.pitchmaxc_dec_hotkey, hk14)
-generichotkey_onHotkey(hk14,PitchMaxCHotDec)
+--hk14=createHotkey(PitchMaxCHotDec, VK_CONTROL, VK_NUMPAD5)
+--addChangeHotkeyKeysFunctionality(UDF1.pitchmaxc_dec_hotkey, hk14)
+--generichotkey_onHotkey(hk14,PitchMaxCHotDec)
 
 
 
@@ -699,9 +700,9 @@ function HideHUD(sender)
   end
 end
 
-hk19=createHotkey(HideHUD, VK_CONTROL, VK_1)
-addChangeHotkeyKeysFunctionality(UDF1.hud_hotkey, hk19)
-generichotkey_onHotkey(hk19,HideHUD)
+--hk19=createHotkey(HideHUD, VK_CONTROL, VK_1)
+--addChangeHotkeyKeysFunctionality(UDF1.hud_hotkey, hk19)
+--generichotkey_onHotkey(hk19,HideHUD)
 
 local stopZoom = [[
 ]]
@@ -731,7 +732,7 @@ end
 --and this is too many if statments i couldve simplified
 
 
-getAutoAttachList().add("bg3.exe")
+
 gPlaySoundOnAction=false
 --these where throwing an error so they have been commented
 --CETrainer.SEPERATOR.Visible=false
