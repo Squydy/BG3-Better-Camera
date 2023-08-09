@@ -401,8 +401,8 @@ function TactRead(sender)
 end
 
 function DefaultsClick(sender)
-  UDF1.SetTactMin.Text = "6.0"
-  UDF1.SetTactMax.Text = "25.0"
+  UDF1.SetTactMin.Text = "10"
+  UDF1.SetTactMax.Text = "50"
   writeFloat(baseAddress .. tactMin, getProperty(UDF1.SetTactMin,"Text"))
   writeFloat(baseAddress .. tactMax, getProperty(UDF1.SetTactMax,"Text"))
   setProperty(UDF1.ReadTactMin,"Text", readFloat(baseAddress .. tactMin))
