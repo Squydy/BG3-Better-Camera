@@ -1,3 +1,4 @@
+--wrong version, read instructions
 --Uncomment the following line if this is a Cheat Table format trainer and you don't want CE to show (Tip, save as .CETRAINER alternatively)
 --hideAllCEWindows()
 
@@ -233,9 +234,9 @@ end
 
 --Settings Variables
 local minDistVaL = "0"
-local minDist2Val = "0"
+--local minDist2Val = "0"
 local maxDistVal = "0"
-local maxDist2Val = "0"
+--local maxDist2Val = "0"
 local FOVVal = "0"
 local scrollSpeedVal = "0"
 local zoomSpeedVal = "0"
@@ -247,7 +248,7 @@ local camAngle1Val = "0"
 local camAngle2Val = "0"
 local tactMinVal = "0"
 local tactMaxVal = "0"
-hotkeysSettings('DOS2DE\\CameraModHotkey')
+hotkeysSettings('BG3\\CameraModHotkey')
 
 --Offset Varibles
 -----------------------
@@ -282,18 +283,18 @@ local hud = "19"
 
 --Hotkey Settings Save/Load
 function hotkeyLoad(sender)
-  hotkeysSettings('DOS2DE\\CameraModHotkey')
+  hotkeysSettings('BG3\\CameraModHotkey')
   hotkeysSettings('load')
 end
 
 function hotkeySave(sender)
-  hotkeysSettings('DOS2DE\\CameraMod')
+  hotkeysSettings('BG#\\CameraMod')
   hotkeysSettings('save')
 end
 
 --Values Settings Save/Load
 function settingLoad(sender)
-  settings=getSettings('DOS2DE\\CameraModValue')
+  settings=getSettings('BG3\\CameraModValue')
   minDistVaL=settings.Value['minDistVaL']
   --minDist2Val=settings.Value['minDist2Val']
   maxDistVal=settings.Value['maxDistVal']
@@ -311,9 +312,9 @@ function settingLoad(sender)
   tactMinVal=settings.Value['tactMinVal']
   tactMaxVal=settings.Value['tactMaxVal']
   writeFloat(baseAddress .. offsetMin, minDistVaL)
-  writeFloat(baseAddress .. offsetMinn, minDistVaL)
+  --writeFloat(baseAddress .. offsetMinn, minDistVaL)
   writeFloat(baseAddress .. offsetMax, maxDistVal)
-  writeFloat(baseAddress .. offsetMaxx, maxDistVal)
+  --writeFloat(baseAddress .. offsetMaxx, maxDistVal)
   writeFloat(baseAddress .. offsetFOV, FOVVal)
   writeFloat(baseAddress .. scrollSpeed, scrollSpeedVal)
   writeFloat(baseAddress .. zoomSpeed, zoomSpeedVal)
@@ -328,11 +329,11 @@ function settingLoad(sender)
 end
 
 function settingSave(sender)
-  settings=getSettings('DOS2DE\\CameraModValue')
+  settings=getSettings('BG3\\CameraModValue')
   settings.Value['minDistVaL']=getProperty(UDF1.SetMinVal,"Text")
-  settings.Value['minDist2Val']=getProperty(UDF1.SetMinVal,"Text")
+  --settings.Value['minDist2Val']=getProperty(UDF1.SetMinVal,"Text")
   settings.Value['maxDistVal']=getProperty(UDF1.SetMaxVal,"Text")
-  settings.Value['maxDist2Val']=getProperty(UDF1.SetMaxVal,"Text")
+  --settings.Value['maxDist2Val']=getProperty(UDF1.SetMaxVal,"Text")
   settings.Value['FOVVal']=getProperty(UDF1.FOVEdit,"Text")
   settings.Value['scrollSpeedVal']=getProperty(UDF1.ScrollSpeedEdit,"Text")
   settings.Value['zoomSpeedVal']=getProperty(UDF1.ZoomSpeedEdit,"Text")
@@ -497,9 +498,9 @@ function ZoomHotDec(sender)
   writeFloat(baseAddress .. zoomSpeed, readFloat(baseAddress .. zoomSpeed) - getProperty(UDF1.ZoomInc,"Text"))
   setProperty(UDF1.ZoomSpeedEdit,"Text", readFloat(baseAddress .. zoomSpeed))
 end
---hk6=createHotkey(ZoomHotDec, VK_NUMPAD6)
---addChangeHotkeyKeysFunctionality(UDF1.zoom_dec_hotkey, hk6)
---generichotkey_onHotkey(hk6,ZoomHotDec)
+hk6=createHotkey(ZoomHotDec, VK_NUMPAD6)
+addChangeHotkeyKeysFunctionality(UDF1.zoom_dec_hotkey, hk6)
+generichotkey_onHotkey(hk6,ZoomHotDec)
 
 
 
