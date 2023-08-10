@@ -258,7 +258,7 @@ local rax = "057C7750"
 -----------------------
 --for dx11
 --local app = "bg3_dx11.exe"
---local rax = "055353A0"
+--local rax = "055363A0"
 -----------------------
 local baseAddress = "[" .. app .. "+" .. rax .. "]"
 local offsetMin = "7B8"
@@ -281,8 +281,13 @@ local hud = "19" --old
 local camHeight = "7F0"
 local camDis = "860"
 
-
+-----------------------
+--vk version
 local version_rax = "05804B18"
+-----------------------
+--dx11 version
+--local version_rax = "05573768"
+-----------------------
 local version_offset = "270"
 local version = "[" .. app .. "+" .. version_rax .. "]"
 
