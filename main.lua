@@ -254,7 +254,7 @@ hotkeysSettings('BG3\\CameraModHotkey')
 -----------------------
 --for vulkan
 local app = "bg3.exe"
-local rax = "057C6750"
+local rax = "057C7750"
 -----------------------
 --for dx11
 --local app = "bg3_dx11.exe"
@@ -265,21 +265,30 @@ local offsetMin = "7B8"
 --local offsetMinn = "C4C"
 local offsetMax = "7B4"
 --local offsetMaxx = "C48"
-local offsetFOV = "814" --810? fov zoom in?
+local FOVC = "810" --fov close
+local FOVF = "814" --fov far
 local scrollSpeed = "83C"
-local zoomSpeed = "838" --83C/838
-local pitchMin = "CCC"
-local pitchMax = "CC0"
-local pitchMinC = "CE4"
-local pitchMaxC = "CD8"
+local zoomSpeed = "838" --this is weird idk zoom steps?
+--local pitchMin = "CCC" --old
+--local pitchMax = "CC0" --old
+local pitchMinC = "CE4" --old
+local pitchMaxC = "CD8" --old
 local camAngle1 = "8EC"
 local camAngle2 = "8F0"
 local tactMin = "854"
 local tactMax = "858"
-local hud = "19"
---7F0 camera height
+local hud = "19" --old
+local camHeight = "7F0"
+local camDis = "860"
+
+
+local version_rax = "05804B18"
+local version_offset = "270"
+local version = "[" .. app .. "+" .. version_rax .. "]"
+
 --8EC an angle
 --8F0 an angle
+--87C cam lower speed or lower something
 
 --Hotkey Settings Save/Load
 function hotkeyLoad(sender)
@@ -296,14 +305,14 @@ end
 function settingLoad(sender)
   settings=getSettings('BG3\\CameraModValue')
   minDistVaL=settings.Value['minDistVaL']
-  --minDist2Val=settings.Value['minDist2Val']
   maxDistVal=settings.Value['maxDistVal']
-  --maxDist2Val=settings.Value['maxDist2Val']
-  FOVVal=settings.Value['FOVVal']
+  CamDistVal=settings.Value['CamDisVal']
+  FOVCVal=settings.Value['FOVCVal']
+  FOVFVal=settings.Value['FOVFVal']
   scrollSpeedVal=settings.Value['scrollSpeedVal']
   zoomSpeedVal=settings.Value['zoomSpeedVal']
-  pitchMinVal=settings.Value['pitchMinVal']
-  pitchMaxVal=settings.Value['pitchMaxVal']
+  --pitchMinVal=settings.Value['pitchMinVal']
+  --pitchMaxVal=settings.Value['pitchMaxVal']
   pitchMinCVal=settings.Value['pitchMinCVal']
   pitchMaxCVal=settings.Value['pitchMaxCVal']
   camAngle1Val=settings.Value['camAngle1Val']
@@ -312,14 +321,14 @@ function settingLoad(sender)
   tactMinVal=settings.Value['tactMinVal']
   tactMaxVal=settings.Value['tactMaxVal']
   writeFloat(baseAddress .. offsetMin, minDistVaL)
-  --writeFloat(baseAddress .. offsetMinn, minDistVaL)
   writeFloat(baseAddress .. offsetMax, maxDistVal)
-  --writeFloat(baseAddress .. offsetMaxx, maxDistVal)
-  writeFloat(baseAddress .. offsetFOV, FOVVal)
+  writeFloat(baseAddress .. camDis, CamDisVal)
+  writeFloat(baseAddress .. FOVF, FOVFVal)
+  writeFloat(baseAddress .. FOVC, FOVCVal)
   writeFloat(baseAddress .. scrollSpeed, scrollSpeedVal)
   writeFloat(baseAddress .. zoomSpeed, zoomSpeedVal)
-  writeFloat(baseAddress .. pitchMin, pitchMinVal)
-  writeFloat(baseAddress .. pitchMax, pitchMaxVal)
+  --writeFloat(baseAddress .. pitchMin, pitchMinVal)
+  --writeFloat(baseAddress .. pitchMax, pitchMaxVal)
   writeFloat(baseAddress .. pitchMinC, pitchMinCVal)
   writeFloat(baseAddress .. pitchMaxC, pitchMaxCVal)
   writeFloat(baseAddress .. camAngle1, camAngle1Val)
@@ -331,14 +340,14 @@ end
 function settingSave(sender)
   settings=getSettings('BG3\\CameraModValue')
   settings.Value['minDistVaL']=getProperty(UDF1.SetMinVal,"Text")
-  --settings.Value['minDist2Val']=getProperty(UDF1.SetMinVal,"Text")
   settings.Value['maxDistVal']=getProperty(UDF1.SetMaxVal,"Text")
-  --settings.Value['maxDist2Val']=getProperty(UDF1.SetMaxVal,"Text")
-  settings.Value['FOVVal']=getProperty(UDF1.FOVEdit,"Text")
+  settings.Value['CamDisVal']=getProperty(UDF1.CamDisEdit,"Text")
+  settings.Value['FOVCVal']=getProperty(UDF1.FOVCEdit,"Text")
+  settings.Value['FOVFVal']=getProperty(UDF1.FOVFEdit,"Text")
   settings.Value['scrollSpeedVal']=getProperty(UDF1.ScrollSpeedEdit,"Text")
   settings.Value['zoomSpeedVal']=getProperty(UDF1.ZoomSpeedEdit,"Text")
-  settings.Value['pitchMinVal']=getProperty(UDF1.PitchMinEdit,"Text")
-  settings.Value['pitchMaxVal']=getProperty(UDF1.PitchMaxEdit,"Text")
+  --settings.Value['pitchMinVal']=getProperty(UDF1.PitchMinEdit,"Text")
+ --settings.Value['pitchMaxVal']=getProperty(UDF1.PitchMaxEdit,"Text")
   settings.Value['pitchMinCVal']=getProperty(UDF1.PitchMinCEdit,"Text")
   settings.Value['pitchMaxCVal']=getProperty(UDF1.PitchMaxCEdit,"Text")
   settings.Value['camAngle1Val']=getProperty(UDF1.CameraAngleEdit,"Text")
@@ -410,35 +419,35 @@ function DefaultsClick(sender)
 end
 
 
---read fov
-function ButtonFOVReadClick(sender)
-  setProperty(UDF1.FOVEdit,"Text", readFloat(baseAddress .. offsetFOV))
+--read camera distance
+function ButtonCamDisReadClick(sender)
+  setProperty(UDF1.CamDisEdit,"Text", readFloat(baseAddress .. camDis))
 end
---write fov
-function ButtonFOVSetClick(sender)
-  writeFloat(baseAddress .. offsetFOV, getProperty(UDF1.FOVEdit,"Text"))
+--write camera distance
+function ButtonCamDisSetClick(sender)
+  writeFloat(baseAddress .. camDis, getProperty(UDF1.CamDisEdit,"Text"))
 end
---reset fov
-function ButtonFOVResetClick(sender)
-  UDF1.FOVEdit.Text = '55'
-  writeFloat(baseAddress .. offsetFOV, getProperty(UDF1.FOVEdit,"Text"))
+--reset camera distance
+function ButtonCamDisResetClick(sender)
+  UDF1.CamDisEdit.Text = '50'
+  writeFloat(baseAddress .. camDis, getProperty(UDF1.CamDisEdit,"Text"))
 end
---hotkey fov
-function FOVHotInc(sender)
-  writeFloat(baseAddress .. offsetFOV, getProperty(UDF1.FOVInc,"Text") + readFloat(baseAddress .. offsetFOV))
-  setProperty(UDF1.FOVEdit,"Text", readFloat(baseAddress .. offsetFOV))
+--hotkey camera distance
+function CamDisHotInc(sender)
+  writeFloat(baseAddress .. camDis, getProperty(UDF1.CamDisInc,"Text") + readFloat(baseAddress .. camDis))
+  setProperty(UDF1.CamDisEdit,"Text", readFloat(baseAddress .. camDis))
 end
-hk1=createHotkey(FOVHotInc, VK_NUMPAD1)
-addChangeHotkeyKeysFunctionality(UDF1.fov_inc_hotkey, hk1)
-generichotkey_onHotkey(hk1,FOVHotInc)
+hk1=createHotkey(CamDisHotInc, VK_NUMPAD1)
+addChangeHotkeyKeysFunctionality(UDF1.cam_dis_inc_hotkey, hk1)
+generichotkey_onHotkey(hk1,CamDisHotInc)
 
-function FOVHotDec(sender)
-  writeFloat(baseAddress .. offsetFOV, readFloat(baseAddress .. offsetFOV) - getProperty(UDF1.FOVInc,"Text"))
-  setProperty(UDF1.FOVEdit,"Text", readFloat(baseAddress .. offsetFOV))
+function CamDisHotDec(sender)
+  writeFloat(baseAddress .. camDis, readFloat(baseAddress .. camDis) - getProperty(UDF1.CamDisInc,"Text"))
+  setProperty(UDF1.CamDisEdit,"Text", readFloat(baseAddress .. camDis))
 end
-hk2=createHotkey(FOVHotDec, VK_NUMPAD2)
-addChangeHotkeyKeysFunctionality(UDF1.fov_dec_hotkey, hk2)
-generichotkey_onHotkey(hk2,FOVHotDec)
+hk2=createHotkey(CamDisHotDec, VK_NUMPAD2)
+addChangeHotkeyKeysFunctionality(UDF1.cam_dis_dec_hotkey, hk2)
+generichotkey_onHotkey(hk2,CamDisHotDec)
 
 
 --Scroll Speed
@@ -504,67 +513,67 @@ generichotkey_onHotkey(hk6,ZoomHotDec)
 
 
 
---Pitch Min
-function ButtonPchMinSet(sender)
-  writeFloat(baseAddress .. pitchMin, getProperty(UDF1.PitchMinEdit,"Text"))
+--FOV Far
+function ButtonFOVFSet(sender)
+  writeFloat(baseAddress .. FOVF, getProperty(UDF1.FOVFEdit,"Text"))
 end
 
-function ButtonPchMinRead(sender)
-  setProperty(UDF1.PitchMinEdit,"Text", readFloat(baseAddress .. pitchMin))
+function ButtonFOVFRead(sender)
+  setProperty(UDF1.FOVFEdit,"Text", readFloat(baseAddress .. FOVF))
 end
 
-function ButtonPchMinReset(sender)
-  UDF1.PitchMinEdit.Text = "0.54073804616928"
-  writeFloat(baseAddress .. pitchMin, getProperty(UDF1.PitchMinEdit,"Text"))
+function ButtonFOVFReset(sender)
+  UDF1.FOVFEdit.Text = "55"
+  writeFloat(baseAddress .. FOVF, getProperty(UDF1.FOVFEdit,"Text"))
 end
 
-function PitchMinHotInc(sender)
-  writeFloat(baseAddress .. pitchMin, getProperty(UDF1.PitchMinInc,"Text") + readFloat(baseAddress .. pitchMin))
-  setProperty(UDF1.PitchMinEdit,"Text", readFloat(baseAddress .. pitchMin))
+function FOVFHotInc(sender)
+  writeFloat(baseAddress .. FOVF, getProperty(UDF1.FOVFInc,"Text") + readFloat(baseAddress .. FOVF))
+  setProperty(UDF1.FOVFEdit,"Text", readFloat(baseAddress .. FOVF))
 end
---hk7=createHotkey(PitchMinHotInc, VK_NUMPAD7)
---addChangeHotkeyKeysFunctionality(UDF1.pitchmin_inc_hotkey, hk7)
---generichotkey_onHotkey(hk7,PitchMinHotInc)
+hk7=createHotkey(FOVFHotInc, VK_NUMPAD7)
+addChangeHotkeyKeysFunctionality(UDF1.fovf_inc_hotkey, hk7)
+generichotkey_onHotkey(hk7,FOVFHotInc)
 
-function PitchMinHotDec(sender)
-  writeFloat(baseAddress .. pitchMin, readFloat(baseAddress .. pitchMin) - getProperty(UDF1.PitchMinInc,"Text"))
-  setProperty(UDF1.PitchMinEdit,"Text", readFloat(baseAddress .. pitchMin))
+function FOVFHotDec(sender)
+  writeFloat(baseAddress .. FOVF, readFloat(baseAddress .. FOVF) - getProperty(UDF1.FOVFInc,"Text"))
+  setProperty(UDF1.FOVFEdit,"Text", readFloat(baseAddress .. FOVF))
 end
---hk8=createHotkey(PitchMinHotDec, VK_NUMPAD8)
---addChangeHotkeyKeysFunctionality(UDF1.pitchmin_dec_hotkey, hk8)
---generichotkey_onHotkey(hk8,PitchMinHotDec)
+hk8=createHotkey(FOVFHotDec, VK_NUMPAD8)
+addChangeHotkeyKeysFunctionality(UDF1.fovf_dec_hotkey, hk8)
+generichotkey_onHotkey(hk8,FOVFHotDec)
 
 
 
---Pitch Max
-function ButtonPchMaxSet(sender)
-  writeFloat(baseAddress .. pitchMax, getProperty(UDF1.PitchMaxEdit,"Text"))
-end
-
-function ButtonPchMaxRead(sender)
-  setProperty(UDF1.PitchMaxEdit,"Text", readFloat(baseAddress .. pitchMax))
+--FOV Close
+function ButtonFOVCSet(sender)
+  writeFloat(baseAddress .. FOVC, getProperty(UDF1.FOVCEdit,"Text"))
 end
 
-function ButtonPchMaxReset(sender)
-  UDF1.PitchMaxEdit.Text = "0.7169771194458"
-  writeFloat(baseAddress .. pitchMax, getProperty(UDF1.PitchMaxEdit,"Text"))
+function ButtonFOVCRead(sender)
+  setProperty(UDF1.FOVCEdit,"Text", readFloat(baseAddress .. FOVC))
 end
 
-function PitchMaxHotInc(sender)
-  writeFloat(baseAddress .. pitchMax, getProperty(UDF1.PitchMaxInc,"Text") + readFloat(baseAddress .. pitchMax))
-  setProperty(UDF1.PitchMaxEdit,"Text", readFloat(baseAddress .. pitchMax))
+function ButtonFOVCReset(sender)
+  UDF1.FOVCEdit.Text = "55"
+  writeFloat(baseAddress .. FOVC, getProperty(UDF1.FOVCEdit,"Text"))
 end
---hk9=createHotkey(PitchMaxHotInc, VK_NUMPAD9)
---addChangeHotkeyKeysFunctionality(UDF1.pitchmax_inc_hotkey, hk9)
---generichotkey_onHotkey(hk9,PitchMaxHotInc)
 
-function PitchMaxHotDec(sender)
-  writeFloat(baseAddress .. pitchMax, readFloat(baseAddress .. pitchMax) - getProperty(UDF1.PitchMaxInc,"Text"))
-  setProperty(UDF1.PitchMaxEdit,"Text", readFloat(baseAddress .. pitchMax))
+function FOVCHotInc(sender)
+  writeFloat(baseAddress .. FOVC, getProperty(UDF1.FOVCInc,"Text") + readFloat(baseAddress .. FOVC))
+  setProperty(UDF1.FOVCEdit,"Text", readFloat(baseAddress .. FOVC))
 end
---hk10=createHotkey(FOVHotDec, VK_CONTROL, VK_NUMPAD1)
---addChangeHotkeyKeysFunctionality(UDF1.pitchmax_dec_hotkey, hk10)
---generichotkey_onHotkey(hk10,PitchMaxHotDec)
+hk9=createHotkey(FOVCHotInc, VK_NUMPAD9)
+addChangeHotkeyKeysFunctionality(UDF1.fovc_inc_hotkey, hk9)
+generichotkey_onHotkey(hk9,FOVCHotInc)
+
+function FOVCHotDec(sender)
+  writeFloat(baseAddress .. FOVC, readFloat(baseAddress .. FOVC) - getProperty(UDF1.FOVCInc,"Text"))
+  setProperty(UDF1.FOVCEdit,"Text", readFloat(baseAddress .. FOVC))
+end
+hk10=createHotkey(FOVCHotDec, VK_CONTROL, VK_NUMPAD1)
+addChangeHotkeyKeysFunctionality(UDF1.fovc_dec_hotkey, hk10)
+generichotkey_onHotkey(hk10,FOVCHotDec)
 
 
 
@@ -732,6 +741,18 @@ function zoomScript(sender)
    scriptDisableInfo1 = nil
    scriptDisableInfo2 = nil
    end
+end
+
+function versionCheck(sender)
+  if
+    readString(version .. version_offset) == "4.1.1.3635601"
+  then
+    setProperty(UDF1.VersionCheck,"Caption", readString(version .. version_offset))
+    UDF1.VersionCheck.Font.Color=0x00ff00
+  else
+    setProperty(UDF1.VersionCheck,"Caption", "4.1.1.3630146")
+    UDF1.VersionCheck.Font.Color=0x0000ff
+  end
 end
 
 
