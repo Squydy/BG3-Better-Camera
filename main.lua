@@ -315,7 +315,7 @@ function settingLoad(sender)
   settings=getSettings('BG3\\CameraModValue')
   minDistVaL=settings.Value['minDistVaL']
   maxDistVal=settings.Value['maxDistVal']
-  CamDistVal=settings.Value['CamDisVal']
+  CamDistVal=settings.Value['CamDistVal']
   FOVCVal=settings.Value['FOVCVal']
   FOVFVal=settings.Value['FOVFVal']
   scrollSpeedVal=settings.Value['scrollSpeedVal']
@@ -344,11 +344,6 @@ function settingLoad(sender)
   writeFloat(baseAddress .. camAngle2, camAngle2Val)
   writeFloat(baseAddress .. tactMin, tactMinVal)
   writeFloat(baseAddress .. tactMax, tactMaxVal)
-  if
-  readFloat(baseAddress .. camDis) <= 0
-  then
-  writeFloat(baseAddress .. camDis, 50)
-  end
 end
 
 function settingSave(sender)
