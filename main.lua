@@ -254,11 +254,15 @@ hotkeysSettings('BG3\\CameraModHotkey')
 -----------------------
 --for vulkan
 local app = "bg3.exe"
-local rax = "057C7750"
+local rax = "057C87B0"
 -----------------------
 --for dx11
 --local app = "bg3_dx11.exe"
---local rax = "055363A0"
+--local rax = "05537420"
+-----------------------
+--dx11 GOG
+--local app = "bg3_dx11.exe"
+--local rax = "0552EFD0"
 -----------------------
 local baseAddress = "[" .. app .. "+" .. rax .. "]"
 local offsetMin = "7B8"
@@ -283,10 +287,10 @@ local camDis = "860"
 
 -----------------------
 --vk version
-local version_rax = "05804B18"
+local version_rax = "05805B78"
 -----------------------
 --dx11 version
---local version_rax = "05573768"
+--local version_rax = "055747E8"
 -----------------------
 local version_offset = "270"
 local version = "[" .. app .. "+" .. version_rax .. "]"
@@ -340,6 +344,11 @@ function settingLoad(sender)
   writeFloat(baseAddress .. camAngle2, camAngle2Val)
   writeFloat(baseAddress .. tactMin, tactMinVal)
   writeFloat(baseAddress .. tactMax, tactMaxVal)
+  if
+  readFloat(baseAddress .. camDis) <= 0
+  then
+  writeFloat(baseAddress .. camDis, 50)
+  end
 end
 
 function settingSave(sender)
@@ -727,9 +736,56 @@ end
 --generichotkey_onHotkey(hk19,HideHUD)
 
 local stopZoom = [[
+[ENABLE]
+
+aobscanmodule(cbzm,bg3.exe,F3 45 0F 11 4C 24 5C) // should be unique
+alloc(newmem,$1000,cbzm)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  //movss [r12+5C],xmm9
+  jmp return
+
+cbzm:
+  jmp newmem
+  nop 2
+return:
+registersymbol(cbzm)
+
+[DISABLE]
+
+cbzm:
+  db F3 45 0F 11 4C 24 5C
+
+unregistersymbol(cbzm)
+dealloc(newmem)
 ]]
 
 local stopUnzoom = [[
+[ENABLE]
+
+aobscanmodule(cbzm2,bg3.exe,F3 0F 11 70 5C 0F 28 74 24 20) // should be unique
+alloc(newmem,$1000,cbzm2)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  //movss [rax+5C],xmm6
+  jmp return
+
+cbzm2:
+  jmp newmem
+return:
+registersymbol(cbzm2)
+
+[DISABLE]
 ]]
 
 local scriptDisableInfo
@@ -750,12 +806,12 @@ end
 
 function versionCheck(sender)
   if
-    readString(version .. version_offset) == "4.1.1.3635601"
+    readString(version .. version_offset) == "4.1.1.3636828"
   then
     setProperty(UDF1.VersionCheck,"Caption", readString(version .. version_offset))
     UDF1.VersionCheck.Font.Color=0x00ff00
   else
-    setProperty(UDF1.VersionCheck,"Caption", "4.1.1.3630146")
+    setProperty(UDF1.VersionCheck,"Caption", "4.1.1.3636828")
     UDF1.VersionCheck.Font.Color=0x0000ff
   end
 end
